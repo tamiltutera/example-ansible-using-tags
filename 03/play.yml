@@ -1,0 +1,5 @@
+#plugin: constructed
+#strict: False
+#groups:
+#    financeservers: inventory_hostname.startswith('servers')
+#    accountservers: inventory_hostname.startswith('clients')

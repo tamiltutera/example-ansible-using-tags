@@ -1,0 +1,41 @@
+---
+- name: 'Copying file1 to file2 using Tags'
+  hosts: webservers
+  tasks:
+    # Define file path
+    - name: Set remote file path here
+      set_fact: 
+         remote_file_path: /tmp/file2.txt
+      tags:
+        - servers
+    # Check remote file
+    - stat: path="{{ remote_file_path }}"
+      register: file_path
+      tags:
+        - servers
+    # copying the file
+    - name: copying the file to webservers
+      copy: src="file1.txt" dest="{{remote_file_path}}"
+      when: not file_path.stat.exists
+      tags: 
+        - servers
+- hosts: dbservers
+  tasks:
+    # Define file path
+    - name: Set remote file path here
+      set_fact: 
+         remote_file_path: /tmp/file2.txt
+      tags:
+        - clients
+    # Check remote file
+    - stat: path="{{ remote_file_path }}"
+      register: file_path
+      tags:
+        - clients
+    # copying the file
+    - name: copying the file to dbservers
+      copy: src="file1.txt" dest="{{remote_file_path}}"
+      when: not file_path.stat.exists
+      tags: 
+        - clients
+

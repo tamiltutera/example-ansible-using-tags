@@ -1,0 +1,4 @@
+---
+- name: play 1 - task2
+  debug:
+    msg: Play 1 - task2
